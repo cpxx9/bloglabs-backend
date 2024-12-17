@@ -7,7 +7,7 @@ const loginController = async (req, res, next) => {
   try {
     const user = await prisma.user.findUnique({
       where: {
-        email: req.body.email,
+        username: req.body.username,
       },
     });
 
@@ -21,13 +21,11 @@ const loginController = async (req, res, next) => {
 
     if (isValid) {
       const tokenObject = issueJWT(user);
-      res
-        .status(200)
-        .json({
-          success: true,
-          token: tokenObject.token,
-          expiresIn: tokenObject.expires,
-        });
+      res.status(200).json({
+        success: true,
+        token: tokenObject.token,
+        expiresIn: tokenObject.expires,
+      });
     } else {
       res
         .status(401)
