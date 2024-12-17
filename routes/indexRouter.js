@@ -1,7 +1,7 @@
 const { Router } = require('express');
+const passport = require('passport');
 const { displayHome } = require('../controllers/indexController');
 const { usersRouter } = require('./usersRouter');
-const passport = require('passport');
 
 const indexRouter = Router();
 
