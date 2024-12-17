@@ -8,12 +8,12 @@ datasource db {
 }
 
 model User {
-  id          String       @id @default(uuid())
-  email       String    @unique
-  firstName   String    
-  lastName    String
-  admin       Boolean   @default(false)
-  hash        String
-  salt        String
-  created     DateTime  @default(now())
+  id       String   @id @default(uuid())
+  username String   @unique
+  email    String?
+  admin    Boolean  @default(false)
+  hash     String
+  salt     String
+  created  DateTime @default(now())
+  updated  DateTime @default(now())
 }
