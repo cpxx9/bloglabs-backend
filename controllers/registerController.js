@@ -22,14 +22,16 @@ const validateUser = [
     .withMessage(`Username ${usernameLengthErr}`)
     .isAlphanumeric()
     .withMessage(`Username ${usernameAlphaNumErr}`),
-  body('email').trim().isEmail().withMessage(emailErr),
+  body('email').optional().trim().isEmail().withMessage(emailErr),
   body('firstname')
+    .optional()
     .trim()
     .isAlpha()
     .withMessage(`First name ${nameAlphaErr}`)
     .isLength({ min: 1, max: 25 })
     .withMessage(`First name ${nameLengthErr}`),
   body('lastname')
+    .optional()
     .trim()
     .isAlpha()
     .withMessage(`Last name ${nameAlphaErr}`)
