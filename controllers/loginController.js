@@ -14,7 +14,7 @@ const loginController = async (req, res, next) => {
     if (!user) {
       return res
         .status(401)
-        .json({ success: false, msg: 'could not find user' });
+        .json({ success: false, msg: 'incorrect email or password' });
     }
 
     const isValid = validPassword(req.body.password, user.hash, user.salt);
@@ -29,7 +29,7 @@ const loginController = async (req, res, next) => {
     } else {
       res
         .status(401)
-        .json({ success: false, msg: 'you entered the wrong password' });
+        .json({ success: false, msg: 'incorrect email or password' });
     }
   } catch (err) {
     next(err);

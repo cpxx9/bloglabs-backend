@@ -6,6 +6,8 @@ const { checkIfAdmin } = require('../utils/auth');
 const { displayUsers } = require('../controllers/usersController');
 
 const usersRouter = Router();
+usersRouter.use('/login', loginRouter);
+usersRouter.use('/register', registerRouter);
 
 usersRouter.get(
   '/',
@@ -13,7 +15,5 @@ usersRouter.get(
   checkIfAdmin,
   displayUsers
 );
-usersRouter.use('/login', loginRouter);
-usersRouter.use('/register', registerRouter);
 
 module.exports = { usersRouter };

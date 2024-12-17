@@ -3,6 +3,7 @@ const errorController = (err, req, res, next) => {
     title: err.name,
     status: err.statusCode,
     message: err.message,
+    info: err.info,
   });
 };
 

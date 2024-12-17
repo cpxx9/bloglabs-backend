@@ -13,7 +13,6 @@ const options = {
 module.exports = (passport) => {
   passport.use(
     new JwtStrategy(options, async (jwt_payload, done) => {
-      console.log(jwt_payload);
       try {
         const user = await prisma.user.findUnique({
           where: { id: jwt_payload.sub },
@@ -21,9 +20,9 @@ module.exports = (passport) => {
         if (user) {
           return done(null, user);
         }
-        return done(null, false);
+        return done(null, false, { message: 'not signed in' });
       } catch (err) {
-        return done(err, false);
+        return done(err, false, { message: 'not signed in' });
       }
     })
   );
