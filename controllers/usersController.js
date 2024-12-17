@@ -18,4 +18,23 @@ const listUsers = async (req, res) => {
   res.status(200).json({ success: true, data: users });
 };
 
-module.exports = { listUsers };
+const listUser = async (req, res) => {
+  const user = await prisma.user.findUnique({
+    where: {
+      username: req.params.username,
+    },
+    select: {
+      created: true,
+      updated: true,
+      username: true,
+      email: true,
+      firstname: true,
+      lastname: true,
+      posts: true,
+      comments: true,
+    },
+  });
+  res.status(200).json({ success: true, data: user });
+};
+
+module.exports = { listUsers, listUser };

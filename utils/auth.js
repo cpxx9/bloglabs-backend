@@ -30,8 +30,19 @@ const checkIfAdmin = asyncHandler(async (req, res, next) => {
   }
 });
 
+const checkIfUserMatch = asyncHandler(async (req, res, next) => {
+  if (req.user.username === req.params.username) {
+    next();
+  } else {
+    throw new CustomForbiddenError(
+      'You must be logged in as this user to view account'
+    );
+  }
+});
+
 module.exports = {
   // checkIfLoggedIn,
   notFound,
   checkIfAdmin,
+  checkIfUserMatch,
 };
