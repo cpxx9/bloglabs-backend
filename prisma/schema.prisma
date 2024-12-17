@@ -8,37 +8,37 @@ datasource db {
 }
 
 model User {
-  id        String        @id @default(uuid())
-  username  String        @unique
+  id        String    @id @default(uuid())
+  username  String    @unique
   email     String?
   firstname String?
   lastname  String?
-  admin     Boolean       @default(false)
+  admin     Boolean   @default(false)
   hash      String
   salt      String
-  created   DateTime      @default(now())
-  updated   DateTime      @default(now())
-  posts     BlogPost[]
-  comments  BlogComment[]
+  created   DateTime  @default(now())
+  updated   DateTime  @default(now())
+  posts     Post[]
+  comments  Comment[]
 }
 
-model BlogPost {
-  id       String        @id @default(uuid())
+model Post {
+  id       String    @id @default(uuid())
   title    String
   subtitle String?
   content  String
-  created  DateTime      @default(now())
-  updated  DateTime      @default(now())
-  author   User          @relation(fields: [authorId], references: [id])
+  created  DateTime  @default(now())
+  updated  DateTime  @default(now())
+  author   User      @relation(fields: [authorId], references: [id])
   authorId String
-  comments BlogComment[]
+  comments Comment[]
 }
 
-model BlogComment {
-  id       String   @id @default(uuid())
+model Comment {
+  id       String @id @default(uuid())
   content  String
-  author   User     @relation(fields: [authorId], references: [id])
+  author   User   @relation(fields: [authorId], references: [id])
   authorId String
-  post     BlogPost @relation(fields: [postId], references: [id])
+  post     Post   @relation(fields: [postId], references: [id])
   postId   String
 }
