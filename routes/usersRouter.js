@@ -9,11 +9,11 @@ const usersRouter = Router();
 usersRouter.use('/login', loginRouter);
 usersRouter.use('/register', registerRouter);
 
-usersRouter.get(
-  '/',
+usersRouter.all(
+  '*',
   passport.authenticate('jwt', { session: false }),
-  checkIfAdmin,
-  displayUsers
+  checkIfAdmin
 );
+usersRouter.get('/', displayUsers);
 
 module.exports = { usersRouter };
