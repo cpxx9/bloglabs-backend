@@ -1,13 +1,7 @@
 const passport = require('passport');
 const { Router } = require('express');
+const { checkIfAuthor, checkUserAuthorMatch } = require('../utils/auth');
 const {
-  checkIfAdmin,
-  checkIfAuthor,
-  checkIfUserMatch,
-  checkUserAuthorMatch,
-} = require('../utils/auth');
-const {
-  deletePost,
   getPosts,
   getPost,
   createPost,
