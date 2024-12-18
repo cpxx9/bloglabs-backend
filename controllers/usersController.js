@@ -18,23 +18,44 @@ const listUsers = async (req, res) => {
   res.status(200).json({ success: true, data: users });
 };
 
-const listUser = async (req, res) => {
-  const user = await prisma.user.findUnique({
-    where: {
-      username: req.params.username,
-    },
-    select: {
-      created: true,
-      updated: true,
-      username: true,
-      email: true,
-      firstname: true,
-      lastname: true,
-      posts: true,
-      comments: true,
-    },
-  });
-  res.status(200).json({ success: true, data: user });
+const listUser = async (req, res, next) => {
+  try {
+    const user = await prisma.user.findUnique({
+      where: {
+        username: req.params.username,
+      },
+      select: {
+        created: true,
+        updated: true,
+        username: true,
+        email: true,
+        firstname: true,
+        lastname: true,
+        posts: true,
+        comments: true,
+      },
+    });
+    res.status(200).json({ success: true, data: user });
+  } catch (err) {
+    next(err);
+  }
 };
 
-module.exports = { listUsers, listUser };
+const updateUser = async (req, res, next) => {
+  const oldUser = req.user;
+  const data = { ...req.query };
+
+  try {
+    const user = await prisma.user.update({
+      where: {
+        username: req.params.username,
+      },
+      data,
+    });
+    res.status(200).json({ success: true, data: [user, oldUser] });
+  } catch (err) {
+    next(err);
+  }
+};
+
+module.exports = { listUsers, listUser, updateUser };
