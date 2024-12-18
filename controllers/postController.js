@@ -1,5 +1,6 @@
 const { validationResult } = require('express-validator');
 const { PrismaClient } = require('@prisma/client');
+const { json } = require('stream/consumers');
 const { validatePost } = require('../utils/validations');
 
 const prisma = new PrismaClient();
@@ -67,8 +68,34 @@ const getPost = async (req, res, next) => {
     next(err);
   }
 };
-const updatePost = async (req, res, next) => {};
-const deletePost = async (req, res, next) => {};
+const updatePost = async (req, res, next) => {
+  const data = { ...req.body };
+
+  try {
+    const updatedPost = await prisma.post.update({
+      where: {
+        id: req.params.postId,
+      },
+      data,
+    });
+    res.status(200).json({ success: true, data: updatedPost });
+  } catch (err) {
+    next(err);
+  }
+};
+
+const deletePost = async (req, res, next) => {
+  try {
+    const deletedPost = await prisma.post.delete({
+      where: {
+        id: req.params.postId,
+      },
+    });
+    res.status(200).json({ success: true, data: deletedPost });
+  } catch (err) {
+    next(err);
+  }
+};
 
 module.exports = {
   createPost,

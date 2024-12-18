@@ -47,7 +47,7 @@ const listUser = async (req, res, next) => {
 
 const updateUser = async (req, res, next) => {
   const oldUser = req.user;
-  const data = { ...req.query };
+  const data = { ...req.body };
   delete data.id;
   delete data.admin;
   delete data.author;
@@ -55,7 +55,7 @@ const updateUser = async (req, res, next) => {
   try {
     const user = await prisma.user.update({
       where: {
-        id: req.user.id,
+        id: req.query.userId,
       },
       data,
     });

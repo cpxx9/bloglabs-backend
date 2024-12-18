@@ -5,6 +5,8 @@ const {
   getPosts,
   getPost,
   createPost,
+  updatePost,
+  deletePost,
 } = require('../controllers/postController');
 
 const postsRouter = Router();
@@ -17,7 +19,8 @@ postsRouter.all(
   checkIfAuthor
 );
 postsRouter.post('/', createPost);
-postsRouter.put('/:postId', checkUserAuthorMatch);
+postsRouter.put('/:postId', checkUserAuthorMatch, updatePost);
+postsRouter.delete('/:postId', checkUserAuthorMatch, deletePost);
 
 module.exports = {
   postsRouter,
