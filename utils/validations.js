@@ -1,4 +1,4 @@
-const { body, validationResult } = require('express-validator');
+const { body } = require('express-validator');
 
 const existsErr = 'field is required!';
 const usernameLengthErr = 'must be between 5 and 30 characters.';
@@ -46,3 +46,5 @@ module.exports.validateUser = [
     .custom((value, { req }) => value === req.body.password)
     .withMessage(passMatchErr),
 ];
+
+module.exports.validatePost = [];

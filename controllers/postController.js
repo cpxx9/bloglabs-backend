@@ -1,19 +1,32 @@
+const { validationResult } = require('express-validator');
 const { PrismaClient } = require('@prisma/client');
+const { validatePost } = require('../utils/validations');
 
 const prisma = new PrismaClient();
 
-const createPost = async (req, res, next) => {
-  try {
-    const newPost = await prisma.post.create({
-      data: {
-        title: req.body.title,
-      },
-    });
-    res.status(200).json({ success: true, data: newPost });
-  } catch (err) {
-    next(err);
-  }
-};
+const createPost = [
+  // validatePost,
+  async (req, res, next) => {
+    // const errors = validationResult(req);
+    // if (!errors.isEmpty()) {
+    //   return res.status(400).json({ success: false, errors: errors.array() });
+    // }
+
+    try {
+      const newPost = await prisma.post.create({
+        data: {
+          title: req.body.title,
+          subtitle: req.body.subtitle,
+          authorId: req.user.id,
+          content: req.body.content,
+        },
+      });
+      res.status(200).json({ success: true, data: newPost });
+    } catch (err) {
+      next(err);
+    }
+  },
+];
 const getPosts = async (req, res, next) => {
   try {
     const posts = await prisma.post.findMany({
