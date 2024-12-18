@@ -2,7 +2,9 @@ const { PrismaClient } = require('@prisma/client');
 
 const prisma = new PrismaClient();
 
-const createPost = async (req, res, next) => {};
+const createPost = async (req, res, next) => {
+  res.status(200).json({ success: true, data: 'Created post' });
+};
 const getPosts = async (req, res, next) => {
   try {
     const posts = await prisma.post.findMany({

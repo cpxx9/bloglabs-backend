@@ -26,7 +26,7 @@ const listUser = async (req, res, next) => {
   try {
     const user = await prisma.user.findUnique({
       where: {
-        id: req.params.id,
+        id: req.params.userId,
       },
       select: {
         created: true,
@@ -50,8 +50,7 @@ const updateUser = async (req, res, next) => {
   const data = { ...req.query };
   delete data.id;
   delete data.admin;
-  delete data.member;
-  data.updated = Date.now();
+  delete data.author;
 
   try {
     const user = await prisma.user.update({

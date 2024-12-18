@@ -18,7 +18,7 @@ model User {
   hash      String
   salt      String
   created   DateTime  @default(now())
-  updated   DateTime  @default(now())
+  updated   DateTime  @updatedAt
   posts     Post[]
   comments  Comment[]
 }
@@ -30,7 +30,7 @@ model Post {
   content   String
   published Boolean   @default(false)
   created   DateTime  @default(now())
-  updated   DateTime  @default(now())
+  updated   DateTime  @updatedAt
   author    User      @relation(fields: [authorId], references: [id])
   authorId  String
   comments  Comment[]

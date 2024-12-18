@@ -42,7 +42,7 @@ const checkIfAuthor = asyncHandler(async (req, res, next) => {
 });
 
 const checkIfUserMatch = asyncHandler(async (req, res, next) => {
-  if (req.user.username === req.params.username) {
+  if (req.user.id === req.params.userId) {
     next();
   } else {
     throw new CustomForbiddenError(
