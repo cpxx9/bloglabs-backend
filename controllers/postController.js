@@ -3,7 +3,16 @@ const { PrismaClient } = require('@prisma/client');
 const prisma = new PrismaClient();
 
 const createPost = async (req, res, next) => {
-  res.status(200).json({ success: true, data: 'Created post' });
+  try {
+    const newPost = await prisma.post.create({
+      data: {
+        title: req.body.title,
+      },
+    });
+    res.status(200).json({ success: true, data: newPost });
+  } catch (err) {
+    next(err);
+  }
 };
 const getPosts = async (req, res, next) => {
   try {
