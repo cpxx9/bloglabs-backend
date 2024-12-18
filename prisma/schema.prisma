@@ -14,6 +14,7 @@ model User {
   firstname String?
   lastname  String?
   admin     Boolean   @default(false)
+  author    Boolean   @default(false)
   hash      String
   salt      String
   created   DateTime  @default(now())

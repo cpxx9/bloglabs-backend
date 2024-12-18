@@ -1,6 +1,9 @@
 const asyncHandler = require('express-async-handler');
+const { PrismaClient } = require('@prisma/client');
 const CustomNotFoundError = require('../errors/CustomNotFoundError');
 const CustomForbiddenError = require('../errors/CustomForbiddenError');
+
+const prisma = new PrismaClient();
 
 const notFound = asyncHandler(async (req, res, next) => {
   throw new CustomNotFoundError('This api route does not exist');
@@ -30,6 +33,14 @@ const checkIfAdmin = asyncHandler(async (req, res, next) => {
   }
 });
 
+const checkIfAuthor = asyncHandler(async (req, res, next) => {
+  if (req.user.author) {
+    next();
+  } else {
+    throw new CustomForbiddenError('Only authors can access this route');
+  }
+});
+
 const checkIfUserMatch = asyncHandler(async (req, res, next) => {
   if (req.user.username === req.params.username) {
     next();
@@ -40,9 +51,28 @@ const checkIfUserMatch = asyncHandler(async (req, res, next) => {
   }
 });
 
+const checkUserAuthorMatch = asyncHandler(async (req, res, next) => {
+  try {
+    const user = await prisma.user.findFirst({
+      include: {
+        posts: {
+          where: {
+            id: req.params.postId,
+          },
+        },
+      },
+    });
+    console.log(user);
+  } catch (err) {
+    next(err);
+  }
+});
+
 module.exports = {
   // checkIfLoggedIn,
   notFound,
   checkIfAdmin,
+  checkIfAuthor,
   checkIfUserMatch,
+  checkUserAuthorMatch,
 };
