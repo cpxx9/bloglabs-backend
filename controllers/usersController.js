@@ -12,7 +12,9 @@ const listUsers = async (req, res, next) => {
         email: true,
         firstname: true,
         lastname: true,
-        posts: true,
+        posts: {
+          include: { authorId: false },
+        },
         comments: true,
       },
     });
