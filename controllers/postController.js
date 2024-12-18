@@ -37,7 +37,12 @@ const getPosts = async (req, res, next) => {
         updated: true,
         title: true,
         subtitle: true,
-        author: true,
+        author: {
+          include: {
+            hash: false,
+            salt: false,
+          },
+        },
         comments: true,
       },
     });
