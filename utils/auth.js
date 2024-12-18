@@ -52,12 +52,18 @@ const checkIfUserMatch = asyncHandler(async (req, res, next) => {
 });
 
 const checkUserAuthorMatch = asyncHandler(async (req, res, next) => {
+  console.log(req.params);
   try {
     const post = await prisma.post.findFirst({
       where: {
-        id: req.params.id,
+        id: req.params.postId,
       },
     });
+    if (!post) {
+      throw new CustomNotFoundError(
+        'This post ID does not reference a valid post'
+      );
+    }
     if (post.authorId === req.user.id) {
       next();
     } else {

@@ -37,8 +37,8 @@ const getPosts = async (req, res, next) => {
         updated: true,
         title: true,
         subtitle: true,
-        authorId: true,
         author: true,
+        comments: true,
       },
     });
     res.status(200).json({ success: true, data: posts });
