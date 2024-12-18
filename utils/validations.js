@@ -47,4 +47,20 @@ module.exports.validateUser = [
     .withMessage(passMatchErr),
 ];
 
-module.exports.validatePost = [];
+module.exports.validatePost = [
+  body('title')
+    .exists({ values: 'undefined' | 'null' })
+    .withMessage(`Title ${existsErr}`)
+    .trim()
+    .isLength({ min: 5, max: 30 })
+    .withMessage(`Title ${usernameLengthErr}`),
+  body('subtitle')
+    .optional()
+    .trim()
+    .isLength({ min: 5, max: 30 })
+    .withMessage(`Subtitle ${usernameLengthErr}`),
+  body('content')
+    .exists({ values: 'undefined' | 'null' })
+    .withMessage(`Main content ${existsErr}`)
+    .trim(),
+];
