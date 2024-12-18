@@ -20,7 +20,28 @@ const getPosts = async (req, res, next) => {
     next(err);
   }
 };
-const getPost = async (req, res, next) => {};
+const getPost = async (req, res, next) => {
+  try {
+    const user = await prisma.post.findUnique({
+      where: {
+        id: req.params.postId,
+      },
+      select: {
+        created: true,
+        updated: true,
+        username: true,
+        email: true,
+        firstname: true,
+        lastname: true,
+        posts: true,
+        comments: true,
+      },
+    });
+    res.status(200).json({ success: true, data: user });
+  } catch (err) {
+    next(err);
+  }
+};
 const updatePost = async (req, res, next) => {};
 const deletePost = async (req, res, next) => {};
 
