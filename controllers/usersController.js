@@ -48,6 +48,10 @@ const listUser = async (req, res, next) => {
 const updateUser = async (req, res, next) => {
   const oldUser = req.user;
   const data = { ...req.query };
+  delete data.id;
+  delete data.admin;
+  delete data.member;
+  data.updated = Date.now();
 
   try {
     const user = await prisma.user.update({
