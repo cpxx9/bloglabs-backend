@@ -31,6 +31,7 @@ const getPosts = async (req, res, next) => {
   try {
     const posts = await prisma.post.findMany({
       select: {
+        id: true,
         created: true,
         updated: true,
         title: true,

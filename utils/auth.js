@@ -53,16 +53,16 @@ const checkIfUserMatch = asyncHandler(async (req, res, next) => {
 
 const checkUserAuthorMatch = asyncHandler(async (req, res, next) => {
   try {
-    const user = await prisma.user.findFirst({
-      include: {
-        posts: {
-          where: {
-            id: req.params.postId,
-          },
-        },
+    const post = await prisma.post.findFirst({
+      where: {
+        id: req.params.id,
       },
     });
-    console.log(user);
+    if (post.authorId === req.user.id) {
+      next();
+    } else {
+      throw new CustomForbiddenError('You must be the author of this post');
+    }
   } catch (err) {
     next(err);
   }
