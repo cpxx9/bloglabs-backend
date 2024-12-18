@@ -7,6 +7,7 @@ const {
   listUsers,
   listUser,
   updateUser,
+  deleteUser,
 } = require('../controllers/usersController');
 
 const usersRouter = Router();
@@ -18,5 +19,6 @@ usersRouter.get('/', checkIfAdmin, listUsers);
 usersRouter.use('/:username', checkIfUserMatch);
 usersRouter.get('/:username', listUser);
 usersRouter.put('/:username', updateUser);
+usersRouter.delete('/:username', deleteUser);
 
 module.exports = { usersRouter };

@@ -62,4 +62,18 @@ const updateUser = async (req, res, next) => {
   }
 };
 
-module.exports = { listUsers, listUser, updateUser };
+const deleteUser = async (req, res, next) => {
+  try {
+    console.log(req.user);
+    const deletedUser = await prisma.user.delete({
+      where: {
+        id: req.user.id,
+      },
+    });
+    res.status(200).json({ success: true, data: deletedUser });
+  } catch (err) {
+    next(err);
+  }
+};
+
+module.exports = { listUsers, listUser, updateUser, deleteUser };
