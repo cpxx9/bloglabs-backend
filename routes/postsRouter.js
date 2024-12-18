@@ -13,7 +13,8 @@ postsRouter.get('/', getPosts);
 postsRouter.get('/:postId', getPost);
 postsRouter.all(
   '*',
-  passport.authenticate('jwt', { session: false }, checkIfAuthor)
+  passport.authenticate('jwt', { session: false }),
+  checkIfAuthor
 );
 postsRouter.post('/', createPost);
 postsRouter.put('/:postId', checkUserAuthorMatch);
