@@ -22,22 +22,22 @@ const getPosts = async (req, res, next) => {
 };
 const getPost = async (req, res, next) => {
   try {
-    const user = await prisma.post.findUnique({
+    const post = await prisma.post.findUnique({
       where: {
         id: req.params.postId,
       },
       select: {
         created: true,
         updated: true,
-        username: true,
-        email: true,
-        firstname: true,
-        lastname: true,
-        posts: true,
+        title: true,
+        subtitle: true,
+        authorId: true,
+        author: true,
+        content: true,
         comments: true,
       },
     });
-    res.status(200).json({ success: true, data: user });
+    res.status(200).json({ success: true, data: post });
   } catch (err) {
     next(err);
   }
