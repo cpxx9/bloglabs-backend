@@ -1,9 +1,62 @@
-module.exports.getComments = (req, res, next) => {};
+const { validationResult } = require('express-validator');
+const { PrismaClient } = require('@prisma/client');
+const { validateComment } = require('../utils/validations');
 
-module.exports.getComment = (req, res, next) => {};
+const prisma = new PrismaClient();
 
-module.exports.postNewComment = (req, res, next) => {};
+module.exports.getComments = async (req, res, next) => {
+  try {
+    const comments = await prisma.comment.findMany({
+      include: {
+        author: false,
+        post: false,
+      },
+    });
+    res.status(200).json({ success: true, data: comments });
+  } catch (err) {
+    next(err);
+  }
+};
 
-module.exports.updateComment = (req, res, next) => {};
+module.exports.getComment = async (req, res, next) => {
+  try {
+    const comment = await prisma.comment.findUnique({
+      where: {
+        id: req.params.commentId,
+      },
+      include: {
+        authorId: false,
+        postId: false,
+      },
+    });
+    res.status(200).json({ success: true, data: comment });
+  } catch (err) {
+    next(err);
+  }
+};
 
-module.exports.deleteComment = (req, res, next) => {};
+module.exports.postNewComment = [
+  validateComment,
+  async (req, res, next) => {
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+      return res.status(400).json({ success: false, errors: errors.array() });
+    }
+    try {
+      const newComment = await prisma.comment.create({
+        data: {
+          content: req.body.content,
+          authorId: req.user.id,
+          postId: req.body.postId,
+        },
+      });
+      res.status(200).json({ success: true, data: newComment });
+    } catch (err) {
+      next(err);
+    }
+  },
+];
+
+module.exports.updateComment = async (req, res, next) => {};
+
+module.exports.deleteComment = async (req, res, next) => {};

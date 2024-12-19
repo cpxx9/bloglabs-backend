@@ -27,6 +27,7 @@ const createPost = [
     }
   },
 ];
+
 const getPosts = async (req, res, next) => {
   try {
     const posts = await prisma.post.findMany({
@@ -50,6 +51,7 @@ const getPosts = async (req, res, next) => {
     next(err);
   }
 };
+
 const getPost = async (req, res, next) => {
   try {
     const post = await prisma.post.findUnique({
@@ -72,6 +74,7 @@ const getPost = async (req, res, next) => {
     next(err);
   }
 };
+
 const updatePost = async (req, res, next) => {
   const data = { ...req.body };
 

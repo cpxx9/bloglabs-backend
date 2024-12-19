@@ -40,6 +40,7 @@ model Comment {
   id       String   @id @default(uuid())
   content  String
   created  DateTime @default(now())
+  updated  DateTime @updatedAt
   author   User     @relation(fields: [authorId], references: [id])
   authorId String
   post     Post     @relation(fields: [postId], references: [id])
