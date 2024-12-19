@@ -64,3 +64,18 @@ module.exports.validatePost = [
     .withMessage(`Main content ${existsErr}`)
     .trim(),
 ];
+
+module.exports.validateComment = [
+  body('content')
+    .exists({ values: 'undefined' | 'null' })
+    .withMessage(`Comment content ${existsErr}`)
+    .trim(),
+  body('authorId')
+    .exists({ values: 'undefined' | 'null' })
+    .withMessage(`Author ID ${existsErr}`)
+    .trim(),
+  body('postId')
+    .exists({ values: 'undefined' | 'null' })
+    .withMessage(`Post ID ${existsErr}`)
+    .trim(),
+];
