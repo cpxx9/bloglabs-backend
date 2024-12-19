@@ -24,5 +24,5 @@ app.use('*', notFound);
 app.use(errorController);
 
 app.listen(PORT, () => {
-  console.log(`Server listening on port ${PORT}`);
+  console.log(`API listening on port ${PORT}`);
 });
