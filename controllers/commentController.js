@@ -57,6 +57,31 @@ module.exports.postNewComment = [
   },
 ];
 
-module.exports.updateComment = async (req, res, next) => {};
+module.exports.updateComment = async (req, res, next) => {
+  try {
+    const updatedComment = await prisma.comment.update({
+      where: {
+        id: req.params.commentId,
+      },
+      data: {
+        content: req.body.content,
+      },
+    });
+    res.status(200).json({ success: true, data: updatedComment });
+  } catch (err) {
+    next(err);
+  }
+};
 
-module.exports.deleteComment = async (req, res, next) => {};
+module.exports.deleteComment = async (req, res, next) => {
+  try {
+    const deletedComment = await prisma.comment.delete({
+      where: {
+        id: req.params.commentId,
+      },
+    });
+    res.status(200).json({ success: true, data: deletedComment });
+  } catch (err) {
+    next(err);
+  }
+};
