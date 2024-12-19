@@ -19,8 +19,8 @@ const postNewUser = [
         data: {
           username: req.body.username,
           email: req.body.email,
-          firstName: req.body.firstname,
-          lastName: req.body.lastname,
+          firstname: req.body.firstname,
+          lastname: req.body.lastname,
           hash,
           salt,
         },

@@ -68,14 +68,30 @@ const updateUser = async (req, res, next) => {
 };
 
 const deleteUser = async (req, res, next) => {
+  const deleteComments = prisma.comment.deleteMany({
+    where: {
+      authorId: req.user.id,
+    },
+  });
+
+  const deletePosts = prisma.post.deleteMany({
+    where: {
+      authorId: req.user.id,
+    },
+  });
+
+  const deletedUser = prisma.post.delete({
+    where: {
+      id: req.user.id,
+    },
+  });
   try {
-    console.log(req.user);
-    const deletedUser = await prisma.user.delete({
-      where: {
-        id: req.user.id,
-      },
-    });
-    res.status(200).json({ success: true, data: deletedUser });
+    const deletedUserTransaction = await prisma.$transaction([
+      deleteComments,
+      deletePosts,
+      deletedUser,
+    ]);
+    res.status(200).json({ success: true, data: deletedUserTransaction });
   } catch (err) {
     next(err);
   }
