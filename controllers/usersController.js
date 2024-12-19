@@ -57,7 +57,7 @@ const updateUser = async (req, res, next) => {
   try {
     const user = await prisma.user.update({
       where: {
-        id: req.query.userId,
+        id: req.params.userId,
       },
       data,
     });
@@ -70,19 +70,19 @@ const updateUser = async (req, res, next) => {
 const deleteUser = async (req, res, next) => {
   const deleteComments = prisma.comment.deleteMany({
     where: {
-      authorId: req.user.id,
+      authorId: req.params.userId,
     },
   });
 
   const deletePosts = prisma.post.deleteMany({
     where: {
-      authorId: req.user.id,
+      authorId: req.params.userId,
     },
   });
 
   const deletedUser = prisma.post.delete({
     where: {
-      id: req.user.id,
+      id: req.params.userId,
     },
   });
   try {

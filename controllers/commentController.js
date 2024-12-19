@@ -47,6 +47,7 @@ module.exports.postNewComment = [
         data: {
           content: req.body.content,
           authorId: req.user.id,
+          // come back to this and think about using params, would need to move routes so this is under /posts/:postId/comments
           postId: req.body.postId,
         },
       });

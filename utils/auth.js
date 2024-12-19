@@ -42,11 +42,11 @@ const checkIfAuthor = asyncHandler(async (req, res, next) => {
 });
 
 const checkIfUserMatch = asyncHandler(async (req, res, next) => {
-  if (req.user.id === req.params.userId) {
+  if (req.user.id === req.params.userId || req.user.admin) {
     next();
   } else {
     throw new CustomForbiddenError(
-      'You must be logged in as this user to view account'
+      'You must be logged in as this user to access this account'
     );
   }
 });
