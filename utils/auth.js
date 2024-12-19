@@ -52,7 +52,6 @@ const checkIfUserMatch = asyncHandler(async (req, res, next) => {
 });
 
 const checkUserAuthorMatch = asyncHandler(async (req, res, next) => {
-  console.log(req.params);
   try {
     const post = await prisma.post.findFirst({
       where: {
