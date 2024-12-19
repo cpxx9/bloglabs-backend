@@ -80,7 +80,7 @@ const deleteUser = async (req, res, next) => {
     },
   });
 
-  const deletedUser = prisma.post.delete({
+  const deletedUser = prisma.user.delete({
     where: {
       id: req.params.userId,
     },
