@@ -92,13 +92,24 @@ const updatePost = async (req, res, next) => {
 };
 
 const deletePost = async (req, res, next) => {
+  const deleteComments = prisma.comment.deleteMany({
+    where: {
+      postId: req.params.userId,
+    },
+  });
+
+  const deletedPost = prisma.post.delete({
+    where: {
+      id: req.params.postId,
+    },
+  });
+
   try {
-    const deletedPost = await prisma.post.delete({
-      where: {
-        id: req.params.postId,
-      },
-    });
-    res.status(200).json({ success: true, data: deletedPost });
+    const deletedPostTransaction = await prisma.$transaction([
+      deleteComments,
+      deletedPost,
+    ]);
+    res.status(200).json({ success: true, data: deletedPostTransaction });
   } catch (err) {
     next(err);
   }
