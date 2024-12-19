@@ -73,6 +73,28 @@ const checkUserAuthorMatch = asyncHandler(async (req, res, next) => {
   }
 });
 
+const checkUserCommentMatch = asyncHandler(async (req, res, next) => {
+  try {
+    const comment = await prisma.comment.findFirst({
+      where: {
+        id: req.params.commentId,
+      },
+    });
+    if (!comment) {
+      throw new CustomNotFoundError(
+        'This post ID does not reference a valid post'
+      );
+    }
+    if (comment.authorId === req.user.id) {
+      next();
+    } else {
+      throw new CustomForbiddenError('You must be the author of this comment');
+    }
+  } catch (err) {
+    next(err);
+  }
+});
+
 module.exports = {
   // checkIfLoggedIn,
   notFound,
@@ -80,4 +102,5 @@ module.exports = {
   checkIfAuthor,
   checkIfUserMatch,
   checkUserAuthorMatch,
+  checkUserCommentMatch,
 };

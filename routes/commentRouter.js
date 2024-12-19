@@ -1,6 +1,6 @@
 const passport = require('passport');
 const { Router } = require('express');
-const { checkIfAdmin } = require('../utils/auth');
+const { checkIfAdmin, checkUserCommentMatch } = require('../utils/auth');
 const {
   getComments,
   getComment,
@@ -14,8 +14,8 @@ commentRouter.all('*', passport.authenticate('jwt', { session: false }));
 commentRouter.get('/', checkIfAdmin, getComments);
 commentRouter.get('/:commentId', checkIfAdmin, getComment);
 commentRouter.post('/', postNewComment);
-commentRouter.put('/:commentId', updateComment);
-commentRouter.delete('/:commentId', deleteComment);
+commentRouter.put('/:commentId', checkUserCommentMatch, updateComment);
+commentRouter.delete('/:commentId', checkUserCommentMatch, deleteComment);
 
 module.exports = {
   commentRouter,
