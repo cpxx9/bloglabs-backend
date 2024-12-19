@@ -13,6 +13,10 @@ require('./config/passport')(passport);
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+const corsOpts = {
+  origin: 'http://example.com',
+  optionsSuccessStatus: 200,
+};
 app.use(cors());
 
 app.use('/api', indexRouter);
