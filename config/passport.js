@@ -12,10 +12,10 @@ const options = {
 
 module.exports = (passport) => {
   passport.use(
-    new JwtStrategy(options, async (jwt_payload, done) => {
+    new JwtStrategy(options, async (payload, done) => {
       try {
         const user = await prisma.user.findUnique({
-          where: { id: jwt_payload.sub },
+          where: { id: payload.sub },
         });
         if (user) {
           return done(null, user);

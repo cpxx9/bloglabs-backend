@@ -26,11 +26,20 @@ const postNewUser = [
           salt,
         },
       });
-      const tokenObject = issueJWT(user);
+      const tokens = await issueJWT(user);
+      const accessTokenObject = tokens.accessToken;
+      const refreshToken = tokens.refreshToken.token.split(' ')[1];
+      res.cookie('jwt', refreshToken, {
+        httpOnly: true,
+        sameSite: 'None',
+        secure: true,
+        maxAge: 24 * 60 * 60 * 1000,
+      });
+      delete user.refresh;
       res.status(201).json({
         success: true,
-        token: tokenObject.token,
-        expiresIn: tokenObject.expires,
+        token: accessTokenObject.token,
+        expiresIn: accessTokenObject.expires,
         user,
       });
     } catch (err) {
