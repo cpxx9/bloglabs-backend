@@ -22,12 +22,14 @@ model User {
   updated   DateTime  @updatedAt
   posts     Post[]
   comments  Comment[]
+  roles     Role[]    @relation("Roles")
 }
 
 model Role {
-  id   String @id @default(uuid())
-  name String
-  code Int
+  id    String @id @default(uuid())
+  name  String
+  code  Int
+  users User[] @relation("Roles")
 }
 
 model Post {
