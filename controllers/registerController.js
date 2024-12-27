@@ -33,6 +33,14 @@ const postNewUser = [
         user,
       });
     } catch (err) {
+      switch (err.code) {
+        case 'P2002':
+          err.name = `Prisma Error: ${err.code}`;
+          err.statusCode = 409;
+          err.message = `${err.meta.target[0]} field must be unique!`;
+          break;
+        default:
+      }
       return next(err);
     }
   },

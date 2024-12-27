@@ -61,6 +61,10 @@ const updateUser = async (req, res, next) => {
       },
       data,
     });
+    delete user.hash;
+    delete oldUser.hash;
+    delete user.salt;
+    delete oldUser.salt;
     res.status(200).json({ success: true, data: [user, oldUser] });
   } catch (err) {
     next(err);

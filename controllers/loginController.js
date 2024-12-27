@@ -29,9 +29,12 @@ const loginController = [
 
       if (isValid) {
         const tokenObject = issueJWT(user);
+        delete user.hash;
+        delete user.salt;
         res.status(200).json({
           success: true,
           token: tokenObject.token,
+          user,
           expiresIn: tokenObject.expires,
         });
       } else {
