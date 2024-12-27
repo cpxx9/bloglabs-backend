@@ -10,12 +10,11 @@ const refreshController = async (req, res, next) => {
     return res
       .status(401)
       .json({ success: false, msg: 'No token present in request' });
-  const refreshToken = cookies.jwt;
-  const dbToken = refreshToken.split(' ')[1];
+  const refreshToken = cookies.jwt.split(' ')[1];
   try {
     const user = await prisma.user.findFirst({
       where: {
-        refresh: dbToken,
+        refresh: refreshToken,
       },
     });
 
@@ -23,7 +22,7 @@ const refreshController = async (req, res, next) => {
       return res.status(403).json({ success: false, msg: 'Incorrect token' });
     }
 
-    jwt.verify(dbToken, process.env.REFRESH_SECRET, (err, decoded) => {
+    jwt.verify(refreshToken, process.env.REFRESH_SECRET, (err, decoded) => {
       if (err || user.id !== decoded.sub)
         return res
           .status(403)
