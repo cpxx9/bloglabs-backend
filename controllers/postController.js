@@ -21,7 +21,7 @@ const createPost = [
           content: req.body.content,
         },
       });
-      res.status(200).json({ success: true, data: newPost });
+      res.status(201).json({ success: true, data: newPost });
     } catch (err) {
       next(err);
     }

@@ -26,7 +26,7 @@ const postNewUser = [
         },
       });
       const tokenObject = issueJWT(user);
-      res.json({
+      res.status(201).json({
         success: true,
         token: tokenObject.token,
         expiresIn: tokenObject.expires,

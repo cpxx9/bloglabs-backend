@@ -51,7 +51,7 @@ module.exports.postNewComment = [
           postId: req.body.postId,
         },
       });
-      res.status(200).json({ success: true, data: newComment });
+      res.status(201).json({ success: true, data: newComment });
     } catch (err) {
       next(err);
     }
