@@ -7,7 +7,7 @@ const prisma = new PrismaClient();
 
 const options = {
   jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
-  secretOrKey: process.env.SECRET,
+  secretOrKey: process.env.ACCESS_SECRET,
 };
 
 module.exports = (passport) => {

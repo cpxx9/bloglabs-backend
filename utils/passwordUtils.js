@@ -18,19 +18,19 @@ function genPassword(password) {
 }
 
 function issueJWT(user) {
-  const id = user.id;
-  const expiresIn = '1d';
+  const { id } = user;
+  const expiresIn = '10m';
   const payload = {
     sub: id,
     iat: Date.now(),
   };
 
-  const signedToken = jsonwebtoken.sign(payload, process.env.SECRET, {
-    expiresIn: expiresIn,
+  const signedToken = jsonwebtoken.sign(payload, process.env.ACCESS_SECRET, {
+    expiresIn,
   });
 
   return {
-    token: 'Bearer ' + signedToken,
+    token: `Bearer ${signedToken}`,
     expires: expiresIn,
   };
 }
