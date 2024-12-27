@@ -7,4 +7,17 @@ const errorController = (err, req, res, next) => {
   });
 };
 
-module.exports = { errorController };
+const prismaErrController = (err) => {
+  const newErr = {};
+  switch (err.code) {
+    case 'P2002':
+      newErr.name = `Prisma Error: ${err.code}`;
+      newErr.statusCode = 409;
+      newErr.message = `${err.meta.target[0]} field must be unique!`;
+      break;
+    default:
+  }
+  return newErr;
+};
+
+module.exports = { errorController, prismaErrController };
