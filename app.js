@@ -4,8 +4,8 @@ const cors = require('cors');
 const passport = require('passport');
 const path = require('node:path');
 const { indexRouter } = require('./routes/indexRouter');
-const { notFound } = require('./utils/auth');
-const { errorController } = require('./errors/errorController');
+const { notFound } = require('./middleware/auth');
+const { errorController } = require('./middleware/errorController');
 const { corsOptions } = require('./config/corsOptions');
 
 const PORT = process.env.PORT || 8000;

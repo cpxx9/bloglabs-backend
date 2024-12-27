@@ -1,6 +1,6 @@
 const passport = require('passport');
 const { Router } = require('express');
-const { checkIfAdmin, checkIfUserMatch } = require('../utils/auth');
+const { checkIfAdmin, checkIfUserMatch } = require('../middleware/auth');
 const {
   listUsers,
   listUser,

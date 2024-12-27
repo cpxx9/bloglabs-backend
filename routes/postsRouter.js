@@ -1,6 +1,6 @@
 const passport = require('passport');
 const { Router } = require('express');
-const { checkIfAuthor, checkUserAuthorMatch } = require('../utils/auth');
+const { checkIfAuthor, checkUserAuthorMatch } = require('../middleware/auth');
 const {
   getPosts,
   getPost,
