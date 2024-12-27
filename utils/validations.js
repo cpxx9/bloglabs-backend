@@ -9,6 +9,17 @@ const emailErr = 'Must be a valid email address.';
 const passLengthErr = 'must be between 8 and 32 characters.';
 const passMatchErr = 'Passwords must match.';
 
+module.exports.validateLogin = [
+  body('username')
+    .exists({ values: 'undefined' | 'null' })
+    .withMessage(`Username ${existsErr}`)
+    .trim(),
+  body('password')
+    .exists({ values: 'undefined' | 'null' })
+    .withMessage(`Password ${existsErr}`)
+    .trim(),
+];
+
 module.exports.validateUser = [
   body('username')
     .exists({ values: 'undefined' | 'null' })
