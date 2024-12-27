@@ -3,9 +3,11 @@ const { usersRouter } = require('./usersRouter');
 const { postsRouter } = require('./postsRouter');
 const { commentRouter } = require('./commentRouter');
 const { loginRouter } = require('./loginRouter');
+const { registerRouter } = require('./registerRouter');
 
 const indexRouter = Router();
 
+indexRouter.use('/register', registerRouter);
 indexRouter.use('/login', loginRouter);
 indexRouter.use('/users', usersRouter);
 indexRouter.use('/posts', postsRouter);

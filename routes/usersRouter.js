@@ -1,6 +1,5 @@
 const passport = require('passport');
 const { Router } = require('express');
-const { registerRouter } = require('./registerRouter');
 const { checkIfAdmin, checkIfUserMatch } = require('../utils/auth');
 const {
   listUsers,
@@ -10,7 +9,6 @@ const {
 } = require('../controllers/usersController');
 
 const usersRouter = Router();
-usersRouter.use('/', registerRouter);
 
 usersRouter.all('*', passport.authenticate('jwt', { session: false }));
 usersRouter.get('/', checkIfAdmin, listUsers);
