@@ -28,13 +28,20 @@ const loginController = [
       const isValid = validPassword(req.body.password, user.hash, user.salt);
 
       if (isValid) {
-        const tokenObject = issueJWT(user);
+        const tokens = await issueJWT(user);
+        const accessTokenObject = tokens.accessToken;
+        const refreshToken = tokens.refreshToken.token.split(' ')[1];
+        res.cookie('jwt', refreshToken, {
+          httpOnly: true,
+          maxAge: 24 * 60 * 60 * 1000,
+        });
         delete user.hash;
         delete user.salt;
+        delete user.refresh;
         res.status(200).json({
           success: true,
-          token: tokenObject.token,
-          expiresIn: tokenObject.expires,
+          token: accessTokenObject.token,
+          expiresIn: accessTokenObject.expires,
           user,
         });
       } else {

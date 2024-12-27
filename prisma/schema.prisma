@@ -17,7 +17,7 @@ model User {
   author    Boolean   @default(false)
   hash      String
   salt      String
-  refresh   String?
+  refresh   String?   @default("")
   created   DateTime  @default(now())
   updated   DateTime  @updatedAt
   posts     Post[]

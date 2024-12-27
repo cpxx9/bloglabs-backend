@@ -51,6 +51,7 @@ const updateUser = async (req, res, next) => {
   const oldUser = req.user;
   const data = { ...req.body };
   delete data.id;
+  delete data.refresh;
   delete data.admin;
   delete data.author;
 
@@ -65,6 +66,8 @@ const updateUser = async (req, res, next) => {
     delete oldUser.hash;
     delete user.salt;
     delete oldUser.salt;
+    delete user.refresh;
+    delete oldUser.refresh;
     res.status(200).json({ success: true, data: [user, oldUser] });
   } catch (err) {
     next(err);
