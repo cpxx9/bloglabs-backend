@@ -8,12 +8,14 @@ const { indexRouter } = require('./routes/indexRouter');
 const { notFound } = require('./middleware/auth');
 const { errorController } = require('./middleware/errorController');
 const { corsOptions } = require('./config/corsOptions');
+const { credentials } = require('./middleware/credentials');
 
 const PORT = process.env.PORT || 8000;
 
 require('./config/passport')(passport);
 
 const app = express();
+app.use(credentials);
 app.use(cors(corsOptions));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));

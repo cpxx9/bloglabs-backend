@@ -10,7 +10,7 @@ const refreshController = async (req, res, next) => {
     return res
       .status(401)
       .json({ success: false, msg: 'No token present in request' });
-  const refreshToken = cookies.jwt.split(' ')[1];
+  const refreshToken = cookies.jwt;
   try {
     const user = await prisma.user.findFirst({
       where: {
@@ -28,14 +28,14 @@ const refreshController = async (req, res, next) => {
           .status(403)
           .json({ success: false, msg: 'Invalid response' });
       const accessToken = jwt.sign(
-        { sub: user.id, iat: Date.now() },
+        { sub: user.id, iat: Math.floor(Date.now() / 1000) },
         process.env.ACCESS_SECRET,
-        { expiresIn: '10m' }
+        { expiresIn: '30s' }
       );
       res.status(200).json({
         success: true,
         token: `Bearer ${accessToken}`,
-        expiresIn: '10m',
+        expiresIn: '30s',
         user,
       });
     });

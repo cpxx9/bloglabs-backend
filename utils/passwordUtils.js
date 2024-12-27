@@ -24,11 +24,11 @@ async function issueJWT(user) {
   const { id } = user;
   const payload = {
     sub: id,
-    iat: Date.now(),
+    iat: Math.floor(Date.now() / 1000),
   };
 
   const accessToken = jsonwebtoken.sign(payload, process.env.ACCESS_SECRET, {
-    expiresIn: '10m',
+    expiresIn: '30s',
   });
 
   const refreshToken = jsonwebtoken.sign(payload, process.env.REFRESH_SECRET, {

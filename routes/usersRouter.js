@@ -1,4 +1,5 @@
 const passport = require('passport');
+require('../config/passport')(passport);
 const { Router } = require('express');
 const { checkIfAdmin, checkIfUserMatch } = require('../middleware/auth');
 const {

@@ -33,6 +33,8 @@ const loginController = [
         const refreshToken = tokens.refreshToken.token.split(' ')[1];
         res.cookie('jwt', refreshToken, {
           httpOnly: true,
+          sameSite: 'None',
+          secure: true,
           maxAge: 24 * 60 * 60 * 1000,
         });
         delete user.hash;
