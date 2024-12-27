@@ -40,7 +40,7 @@ const loginController = [
           .json({ success: false, msg: 'incorrect email or password' });
       }
     } catch (err) {
-      next(err);
+      return next(err);
     }
   },
 ];
