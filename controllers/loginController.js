@@ -34,8 +34,8 @@ const loginController = [
         res.status(200).json({
           success: true,
           token: tokenObject.token,
-          user,
           expiresIn: tokenObject.expires,
+          user,
         });
       } else {
         res
