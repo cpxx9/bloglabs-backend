@@ -30,12 +30,12 @@ const refreshController = async (req, res, next) => {
       const accessToken = jwt.sign(
         { sub: user.id, iat: Math.floor(Date.now() / 1000) },
         process.env.ACCESS_SECRET,
-        { expiresIn: '30s' }
+        { expiresIn: '10m' }
       );
       res.status(200).json({
         success: true,
         token: `Bearer ${accessToken}`,
-        expiresIn: '30s',
+        expiresIn: '10m',
         user,
       });
     });

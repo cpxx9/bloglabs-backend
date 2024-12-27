@@ -28,7 +28,7 @@ async function issueJWT(user) {
   };
 
   const accessToken = jsonwebtoken.sign(payload, process.env.ACCESS_SECRET, {
-    expiresIn: '30s',
+    expiresIn: '10m',
   });
 
   const refreshToken = jsonwebtoken.sign(payload, process.env.REFRESH_SECRET, {
