@@ -12,9 +12,12 @@ const PORT = process.env.PORT || 8000;
 require('./config/passport')(passport);
 
 app.use(express.json());
-app.use(express.urlencoded({ extended: true }));
 
-const allowlist = ['http://localhost:3000', 'http://blog.cjplabs.com'];
+const allowlist = [
+  'http://localhost:3000',
+  'http://blog.cjplabs.com',
+  'http://127.0.0.1:3000',
+];
 const corsOptions = {
   origin: (origin, callback) => {
     if (allowlist.indexOf(origin) !== -1) {
@@ -23,9 +26,11 @@ const corsOptions = {
       callback(new Error('Not allowed by CORS'));
     }
   },
+  optionsSuccessStatus: 200,
 };
 
 app.use(cors(corsOptions));
+app.use(express.urlencoded({ extended: false }));
 
 app.use('/api', indexRouter);
 app.use('*', notFound);
