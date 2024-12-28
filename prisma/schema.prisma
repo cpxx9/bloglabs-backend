@@ -13,6 +13,8 @@ model User {
   email     String?
   firstname String?
   lastname  String?
+  admin     Boolean   @default(false)
+  author    Boolean   @default(false)
   hash      String
   salt      String
   refresh   String?   @default("")
@@ -20,14 +22,6 @@ model User {
   updated   DateTime  @updatedAt
   posts     Post[]
   comments  Comment[]
-  roles     Role[]    @relation("Roles")
-}
-
-model Role {
-  id    String @id @default(uuid())
-  name  String
-  code  Int
-  users User[] @relation("Roles")
 }
 
 model Post {
