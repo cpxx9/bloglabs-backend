@@ -22,7 +22,7 @@ const loginController = [
       if (!user) {
         return res
           .status(401)
-          .json({ success: false, msg: 'incorrect email or password' });
+          .json({ success: false, msg: 'incorrect username or password' });
       }
 
       const isValid = validPassword(req.body.password, user.hash, user.salt);
@@ -49,7 +49,7 @@ const loginController = [
       } else {
         res
           .status(401)
-          .json({ success: false, msg: 'incorrect email or password' });
+          .json({ success: false, msg: 'incorrect username or password' });
       }
     } catch (err) {
       return next(err);
