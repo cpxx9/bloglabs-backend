@@ -16,19 +16,20 @@ const postNewUser = [
 
     const { salt, hash } = genPassword(req.body.password);
     try {
+      const tokens = await issueJWT(user);
+      const accessTokenObject = tokens.accessToken;
+      const refreshToken = tokens.refreshToken.token.split(' ')[1];
       const user = await prisma.user.create({
         data: {
           username: req.body.username,
           email: req.body.email,
           firstname: req.body.firstname,
           lastname: req.body.lastname,
+          refresh: refreshToken,
           hash,
           salt,
         },
       });
-      const tokens = await issueJWT(user);
-      const accessTokenObject = tokens.accessToken;
-      const refreshToken = tokens.refreshToken.token.split(' ')[1];
       res.cookie('jwt', refreshToken, {
         httpOnly: true,
         sameSite: 'None',
