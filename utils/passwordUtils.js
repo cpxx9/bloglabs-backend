@@ -33,7 +33,7 @@ async function issueJWT(user) {
   });
 
   const refreshToken = jsonwebtoken.sign(payload, process.env.REFRESH_SECRET, {
-    expiresIn: '3d',
+    expiresIn: '1d',
   });
 
   await prisma.user.update({
