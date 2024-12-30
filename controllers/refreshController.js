@@ -36,7 +36,7 @@ const refreshController = async (req, res, next) => {
         success: true,
         token: `Bearer ${accessToken}`,
         // change to 10-15m for prod
-        expiresIn: '30s',
+        expiresIn: '10m',
         user,
       });
     });
