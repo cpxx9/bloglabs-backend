@@ -16,27 +16,36 @@ const postNewUser = [
 
     const { salt, hash } = genPassword(req.body.password);
     try {
-      const tokens = await issueJWT(user);
-      const accessTokenObject = tokens.accessToken;
-      const refreshToken = tokens.refreshToken.token.split(' ')[1];
       const user = await prisma.user.create({
         data: {
           username: req.body.username,
           email: req.body.email,
           firstname: req.body.firstname,
           lastname: req.body.lastname,
-          refresh: refreshToken,
           hash,
           salt,
         },
       });
+      const tokens = await issueJWT(user);
+      const accessTokenObject = tokens.accessToken;
+      const refreshToken = tokens.refreshToken.token.split(' ')[1];
       res.cookie('jwt', refreshToken, {
         httpOnly: true,
         sameSite: 'None',
         secure: true,
         maxAge: 24 * 60 * 60 * 1000,
       });
+      delete user.hash;
+      delete user.salt;
       delete user.refresh;
+      await prisma.user.update({
+        where: {
+          username: user.username,
+        },
+        data: {
+          refresh: refreshToken,
+        },
+      });
       res.status(201).json({
         success: true,
         token: accessTokenObject.token,

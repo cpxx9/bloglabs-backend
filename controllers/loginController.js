@@ -40,6 +40,14 @@ const loginController = [
         delete user.hash;
         delete user.salt;
         delete user.refresh;
+        await prisma.user.update({
+          where: {
+            username: user.username,
+          },
+          data: {
+            refresh: refreshToken,
+          },
+        });
         res.status(200).json({
           success: true,
           token: accessTokenObject.token,
