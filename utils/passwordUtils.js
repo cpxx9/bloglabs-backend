@@ -29,11 +29,11 @@ async function issueJWT(user) {
 
   const accessToken = jsonwebtoken.sign(payload, process.env.ACCESS_SECRET, {
     // change to 10-15m for prod
-    expiresIn: '10s',
+    expiresIn: '10m',
   });
 
   const refreshToken = jsonwebtoken.sign(payload, process.env.REFRESH_SECRET, {
-    expiresIn: '60m',
+    expiresIn: '1d',
   });
 
   await prisma.user.update({
