@@ -28,6 +28,8 @@ const loginController = [
       const isValid = validPassword(req.body.password, user.hash, user.salt);
 
       if (isValid) {
+        delete user.hash;
+        delete user.salt;
         const tokens = await issueJWT(user);
         const accessTokenObject = tokens.accessToken;
         const refreshToken = tokens.refreshToken.token.split(' ')[1];
@@ -37,9 +39,6 @@ const loginController = [
           secure: true,
           maxAge: 24 * 60 * 60 * 1000,
         });
-        delete user.hash;
-        delete user.salt;
-        delete user.refresh;
         await prisma.user.update({
           where: {
             username: user.username,
@@ -48,11 +47,11 @@ const loginController = [
             refresh: refreshToken,
           },
         });
+        delete user.refresh;
         res.status(200).json({
           success: true,
           token: accessTokenObject.token,
           expiresIn: accessTokenObject.expires,
-          user,
         });
       } else {
         res

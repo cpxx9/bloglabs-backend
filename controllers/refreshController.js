@@ -28,7 +28,7 @@ const refreshController = async (req, res, next) => {
           .status(403)
           .json({ success: false, msg: 'Invalid response' });
       const accessToken = jwt.sign(
-        { sub: user.id, iat: Math.floor(Date.now() / 1000) },
+        { sub: user.id, user, iat: Math.floor(Date.now() / 1000) },
         process.env.ACCESS_SECRET,
         { expiresIn: '10s' }
       );
@@ -40,7 +40,6 @@ const refreshController = async (req, res, next) => {
         token: `Bearer ${accessToken}`,
         // change to 10-15m for prod
         expiresIn: '10s',
-        user,
       });
     });
   } catch (err) {

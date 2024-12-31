@@ -21,9 +21,9 @@ function genPassword(password) {
 }
 
 async function issueJWT(user) {
-  const { id } = user;
   const payload = {
-    sub: id,
+    sub: user.id,
+    user,
     iat: Math.floor(Date.now() / 1000),
   };
 
@@ -38,7 +38,7 @@ async function issueJWT(user) {
 
   await prisma.user.update({
     where: {
-      id,
+      id: user.id,
     },
     data: {
       refresh: refreshToken,

@@ -26,6 +26,8 @@ const postNewUser = [
           salt,
         },
       });
+      delete user.hash;
+      delete user.salt;
       const tokens = await issueJWT(user);
       const accessTokenObject = tokens.accessToken;
       const refreshToken = tokens.refreshToken.token.split(' ')[1];
@@ -35,8 +37,6 @@ const postNewUser = [
         secure: true,
         maxAge: 24 * 60 * 60 * 1000,
       });
-      delete user.hash;
-      delete user.salt;
       delete user.refresh;
       await prisma.user.update({
         where: {
@@ -50,7 +50,6 @@ const postNewUser = [
         success: true,
         token: accessTokenObject.token,
         expiresIn: accessTokenObject.expires,
-        user,
       });
     } catch (err) {
       const newErr = prismaErrController(err);
