@@ -6,6 +6,7 @@ const listUsers = async (req, res, next) => {
   try {
     const users = await prisma.user.findMany({
       select: {
+        id: true,
         created: true,
         updated: true,
         username: true,
