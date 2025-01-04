@@ -25,16 +25,17 @@ model User {
 }
 
 model Post {
-  id        String    @id @default(uuid())
-  title     String
-  subtitle  String?
-  content   String
-  published Boolean   @default(false)
-  created   DateTime  @default(now())
-  updated   DateTime  @updatedAt
-  author    User      @relation(fields: [authorId], references: [id])
-  authorId  String
-  comments  Comment[]
+  id            String    @id @default(uuid())
+  title         String
+  subtitle      String?
+  content       String
+  published     Boolean   @default(false)
+  datepublished DateTime?
+  created       DateTime  @default(now())
+  updated       DateTime  @updatedAt
+  author        User      @relation(fields: [authorId], references: [id])
+  authorId      String
+  comments      Comment[]
 }
 
 model Comment {
