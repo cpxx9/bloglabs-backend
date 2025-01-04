@@ -37,6 +37,8 @@ const getPosts = async (req, res, next) => {
         updated: true,
         title: true,
         subtitle: true,
+        published: true,
+        datepublished: true,
         author: {
           include: {
             hash: false,
