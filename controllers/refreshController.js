@@ -30,7 +30,7 @@ const refreshController = async (req, res, next) => {
       const accessToken = jwt.sign(
         { sub: user.id, user, iat: Math.floor(Date.now() / 1000) },
         process.env.ACCESS_SECRET,
-        { expiresIn: '10s' }
+        { expiresIn: '10m' }
       );
       delete user.hash;
       delete user.salt;
