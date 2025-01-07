@@ -36,6 +36,7 @@ const getPosts = async (req, res, next) => {
         created: true,
         updated: true,
         title: true,
+        content: true,
         subtitle: true,
         published: true,
         datepublished: true,
