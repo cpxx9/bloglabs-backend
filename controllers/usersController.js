@@ -11,6 +11,8 @@ const listUsers = async (req, res, next) => {
         updated: true,
         username: true,
         email: true,
+        admin: true,
+        author: true,
         firstname: true,
         lastname: true,
         posts: {
@@ -36,6 +38,8 @@ const listUser = async (req, res, next) => {
         updated: true,
         username: true,
         email: true,
+        admin: true,
+        author: true,
         firstname: true,
         lastname: true,
         posts: true,
