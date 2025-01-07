@@ -57,8 +57,8 @@ const updateUser = async (req, res, next) => {
   const data = { ...req.body };
   delete data.id;
   delete data.refresh;
-  if (!data.admin) delete data.admin;
-  if (!data.admin) delete data.author;
+  if (!req.user.admin) delete data.admin;
+  if (!req.user.admin) delete data.author;
 
   try {
     const user = await prisma.user.update({
