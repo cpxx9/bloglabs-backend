@@ -29,6 +29,7 @@ const createPost = [
 ];
 
 const getPosts = async (req, res, next) => {
+  const { published } = req.query;
   try {
     const posts = await prisma.post.findMany({
       select: {
@@ -47,6 +48,9 @@ const getPosts = async (req, res, next) => {
           },
         },
         comments: true,
+      },
+      where: {
+        ...(published !== undefined ? { published: true } : {}),
       },
     });
     res.status(200).json({ success: true, data: posts });
