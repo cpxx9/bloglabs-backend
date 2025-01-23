@@ -36,6 +36,7 @@ const postNewUser = [
         sameSite: 'None',
         secure: true,
         maxAge: 24 * 60 * 60 * 1000,
+        partitioned: true,
       });
       delete user.refresh;
       await prisma.user.update({
