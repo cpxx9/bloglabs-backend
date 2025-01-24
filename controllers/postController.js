@@ -47,7 +47,19 @@ const getPosts = async (req, res, next) => {
             salt: false,
           },
         },
-        comments: true,
+        comments: {
+          select: {
+            content: true,
+            created: true,
+            author: {
+              select: {
+                username: true,
+                firstname: true,
+                lastname: true,
+              },
+            },
+          },
+        },
       },
       where: {
         ...(published !== undefined ? { published: true } : {}),
@@ -73,7 +85,19 @@ const getPost = async (req, res, next) => {
         authorId: true,
         author: true,
         content: true,
-        comments: true,
+        comments: {
+          select: {
+            content: true,
+            created: true,
+            author: {
+              select: {
+                username: true,
+                firstname: true,
+                lastname: true,
+              },
+            },
+          },
+        },
       },
     });
     res.status(200).json({ success: true, data: post });
