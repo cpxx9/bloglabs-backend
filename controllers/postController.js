@@ -88,6 +88,7 @@ const getPost = async (req, res, next) => {
         content: true,
         comments: {
           select: {
+            id: true,
             content: true,
             created: true,
             author: {
