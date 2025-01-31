@@ -8,6 +8,7 @@ const {
   postNewComment,
   updateComment,
   deleteComment,
+  deleteComments,
 } = require('../controllers/commentController');
 
 const commentRouter = Router();
@@ -17,6 +18,7 @@ commentRouter.get('/:commentId', checkIfAdmin, getComment);
 commentRouter.post('/', postNewComment);
 commentRouter.put('/:commentId', checkUserCommentMatch, updateComment);
 commentRouter.delete('/:commentId', checkUserCommentMatch, deleteComment);
+commentRouter.put('/', checkUserCommentMatch, deleteComments);
 
 module.exports = {
   commentRouter,

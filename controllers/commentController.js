@@ -86,3 +86,19 @@ module.exports.deleteComment = async (req, res, next) => {
     next(err);
   }
 };
+
+module.exports.deleteComments = async (req, res, next) => {
+  const commentIds = req.body.commentsToDelete;
+  try {
+    const deletedComments = await prisma.comment.deleteMany({
+      where: {
+        id: {
+          in: commentIds,
+        },
+      },
+    });
+    res.status(200).json({ success: true, data: deletedComments });
+  } catch (err) {
+    next(err);
+  }
+};
