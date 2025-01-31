@@ -14,7 +14,12 @@ const logoutController = async (req, res, next) => {
       },
     });
     if (!user) {
-      res.clearCookie('jwt', { httpOnly: true });
+      res.clearCookie('jwt', {
+        httpOnly: true,
+        sameSite: 'None',
+        secure: true,
+        partitioned: true,
+      });
       return res.sendStatus(204);
     }
     await prisma.user.update({
@@ -25,7 +30,12 @@ const logoutController = async (req, res, next) => {
         refresh: '',
       },
     });
-    res.clearCookie('jwt', { httpOnly: true, sameSite: 'None', secure: true }); // add secure: true - https
+    res.clearCookie('jwt', {
+      httpOnly: true,
+      sameSite: 'None',
+      secure: true,
+      partitioned: true,
+    }); // add secure: true - https
     res.sendStatus(204);
   } catch (err) {
     return next(err);
