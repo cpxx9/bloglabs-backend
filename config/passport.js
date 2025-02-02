@@ -5,7 +5,7 @@ const { PrismaClient } = require('@prisma/client');
 
 const prisma = new PrismaClient();
 
-console.log(process.env.ACCESS_SECRET);
+console.log(process.env);
 
 const options = {
   jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
