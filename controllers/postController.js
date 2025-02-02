@@ -60,11 +60,21 @@ const getPosts = async (req, res, next) => {
               },
             },
           },
+          orderBy: [
+            {
+              created: 'desc',
+            },
+          ],
         },
       },
       where: {
         ...(published !== undefined ? { published: true } : {}),
       },
+      orderBy: [
+        {
+          created: 'desc',
+        },
+      ],
     });
     res.status(200).json({ success: true, data: posts });
   } catch (err) {
@@ -100,6 +110,11 @@ const getPost = async (req, res, next) => {
               },
             },
           },
+          orderBy: [
+            {
+              created: 'desc',
+            },
+          ],
         },
       },
     });

@@ -49,6 +49,7 @@ const postNewUser = [
       });
       res.status(201).json({
         success: true,
+        email: user.email,
         token: accessTokenObject.token,
         expiresIn: accessTokenObject.expires,
       });
