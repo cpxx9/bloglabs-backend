@@ -34,6 +34,8 @@ module.exports.validateUser = [
     .withMessage(`Username ${usernameAlphaNumErr}`)
     .custom((value) => !value.toLowerCase().includes('cjplabs'))
     .withMessage('That username is not allowed'),
+    .custom((value) => !value.toLowerCase().includes('test'))
+    .withMessage('That username is not allowed'),
   body('email').optional().trim().isEmail().withMessage(emailErr),
   body('firstname')
     .optional()
