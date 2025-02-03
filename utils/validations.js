@@ -30,10 +30,10 @@ module.exports.validateUser = [
     .trim()
     .isLength({ min: 5, max: 30 })
     .withMessage(`Username ${usernameLengthErr}`)
-    .custom(
-      (value, { req }) => userreg.test(value) || !value.includes('cjplabs')
-    )
-    .withMessage(`Username ${usernameAlphaNumErr}`),
+    .custom((value, { req }) => userreg.test(value))
+    .withMessage(`Username ${usernameAlphaNumErr}`)
+    .contains('cjplabs', { ignoreCase: true })
+    .withMessage('That username is not allowed'),
   body('email').optional().trim().isEmail().withMessage(emailErr),
   body('firstname')
     .optional()
