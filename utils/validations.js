@@ -32,7 +32,7 @@ module.exports.validateUser = [
     .withMessage(`Username ${usernameLengthErr}`)
     .custom((value, { req }) => userreg.test(value))
     .withMessage(`Username ${usernameAlphaNumErr}`)
-    .contains('cjplabs', { ignoreCase: true })
+    .custom((value) => !value.toLowerCase().includes('cjplabs'))
     .withMessage('That username is not allowed'),
   body('email').optional().trim().isEmail().withMessage(emailErr),
   body('firstname')
