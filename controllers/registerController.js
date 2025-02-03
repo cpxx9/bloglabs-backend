@@ -9,7 +9,6 @@ const prisma = new PrismaClient();
 const postNewUser = [
   validateUser,
   async (req, res, next) => {
-    console.log(req);
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
       return res.status(400).json({ success: false, errors: errors.array() });
@@ -55,6 +54,7 @@ const postNewUser = [
         expiresIn: accessTokenObject.expires,
       });
     } catch (err) {
+      console.log(err);
       const newErr = prismaErrController(err);
       return next(newErr);
     }
