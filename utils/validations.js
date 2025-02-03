@@ -2,12 +2,15 @@ const { body } = require('express-validator');
 
 const existsErr = 'field is required!';
 const usernameLengthErr = 'must be between 5 and 30 characters.';
-const usernameAlphaNumErr = 'must only contain letters and numbers.';
+const usernameAlphaNumErr =
+  'must only contain letters and numbers, hyphens or underscores.';
 const nameAlphaErr = 'must only contain letters.';
 const nameLengthErr = 'must be between 1 and 25 characters.';
 const emailErr = 'Must be a valid email address.';
 const passLengthErr = 'must be between 8 and 32 characters.';
 const passMatchErr = 'Passwords must match.';
+
+const userreg = new RegExp(/^[a-zA-Z0-9-_]+$/);
 
 module.exports.validateLogin = [
   body('username')
@@ -27,7 +30,7 @@ module.exports.validateUser = [
     .trim()
     .isLength({ min: 5, max: 30 })
     .withMessage(`Username ${usernameLengthErr}`)
-    .isAlphanumeric()
+    .custom((value, { req }) => userreg.test(value))
     .withMessage(`Username ${usernameAlphaNumErr}`),
   body('email').optional().trim().isEmail().withMessage(emailErr),
   body('firstname')
