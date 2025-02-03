@@ -33,7 +33,7 @@ module.exports.validateUser = [
     .custom((value, { req }) => userreg.test(value))
     .withMessage(`Username ${usernameAlphaNumErr}`)
     .custom((value) => !value.toLowerCase().includes('cjplabs'))
-    .withMessage('That username is not allowed'),
+    .withMessage('That username is not allowed')
     .custom((value) => !value.toLowerCase().includes('test'))
     .withMessage('That username is not allowed'),
   body('email').optional().trim().isEmail().withMessage(emailErr),
