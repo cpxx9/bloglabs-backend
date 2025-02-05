@@ -63,7 +63,7 @@ const checkUserAuthorMatch = asyncHandler(async (req, res, next) => {
         'This post ID does not reference a valid post'
       );
     }
-    if (post.authorId === req.user.id) {
+    if (post.authorId === req.user.id || req.user.admin) {
       next();
     } else {
       throw new CustomForbiddenError('You must be the author of this post');
@@ -85,7 +85,7 @@ const checkUserCommentMatch = asyncHandler(async (req, res, next) => {
         'This post ID does not reference a valid post'
       );
     }
-    if (comment.authorId === req.user.id) {
+    if (comment.authorId === req.user.id || req.user.admin) {
       next();
     } else {
       throw new CustomForbiddenError('You must be the author of this comment');

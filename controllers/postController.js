@@ -19,6 +19,7 @@ const createPost = [
           subtitle: req.body.subtitle,
           authorId: req.user.id,
           content: req.body.content,
+          datepublished: req.body.datepublished,
         },
       });
       res.status(201).json({ success: true, data: newPost });
@@ -92,6 +93,7 @@ const getPost = async (req, res, next) => {
       select: {
         created: true,
         updated: true,
+        datepublished: true,
         title: true,
         subtitle: true,
         authorId: true,
