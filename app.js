@@ -15,8 +15,8 @@ const PORT = process.env.PORT || 8000;
 require('./config/passport')(passport);
 
 const app = express();
-app.use(credentials);
 app.use(cors(corsOptions));
+app.use(credentials);
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
